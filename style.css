@@ -1,0 +1,282 @@
+* {
+    box-sizing: border-box;
+    transition: inherit;
+}
+@font-face {
+    src: url(Symbola-14.00.woff2);
+    font-family: Symbola;
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    src: url(https://fonts.gstatic.com/s/mavenpro/v32/7Au9p_AqnyWWAxW2Wk3GzWQI.woff2);
+    font-family: Maven Pro;
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    src: url(https://fonts.gstatic.com/s/mavenpro/v32/7Au9p_AqnyWWAxW2Wk3GzWQI.woff2);
+    font-family: Maven Pro;
+    font-weight: bold;
+    font-style: normal;
+}
+@font-face {
+    src: url(https://fonts.gstatic.com/s/firasans/v17/va9E4kDNxMZdWfMOD5Vvl4jL.woff2);
+    font-family: Fira Sans;
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    src: url(https://fonts.gstatic.com/s/firasans/v17/va9B4kDNxMZdWfMOD5VnLK3eRhf6.woff2);
+    font-family: Fira Sans;
+    font-weight: bold;
+    font-style: normal;
+}
+@font-face {
+    src: url(https://fonts.gstatic.com/s/firasans/v17/va9C4kDNxMZdWfMOD5VvkrjJYTI.woff2);
+    font-family: Fira Sans;
+    font-weight: normal;
+    font-style: italic;
+}
+@font-face {
+    src: url(https://fonts.gstatic.com/s/firasans/v17/va9f4kDNxMZdWfMOD5VvkrByRCf4VFk.woff2);
+    font-family: Fira Sans;
+    font-weight: bold;
+    font-style: italic;
+}
+html {
+    overflow: hidden;
+    transition: none 0.8s cubic-bezier(.26,.86,.44,.985);
+
+    /* BUG: servo/servo#29704 */
+    height: 100%;
+}
+html.loading {
+    transition-duration: 0s;
+}
+body {
+    margin: 0;
+
+    /* 32em x 18em */
+    --width: 100vw;
+    --height: calc(100vw * 9 / 16);
+    font-size: calc(var(--height) / 18);
+}
+body.wide {
+    --width: calc(100vh * 16 / 9);
+    --height: 100vh;
+}
+@media (min-aspect-ratio: 16 / 9) {
+    body {
+        --width: calc(100vh * 16 / 9);
+        --height: 100vh;
+    }
+}
+main {
+    position: relative;
+
+    /* BUG: no flex in layout 2020 */
+    /* display: flex;
+    flex-flow: row nowrap; */
+    white-space: nowrap;
+
+    width: var(--width);
+    height: var(--height);
+    margin: calc((100vh - var(--height)) / 2) auto;
+    transition-property: right;
+}
+main > section {
+    /* see BUG in main */
+    white-space: normal;
+}
+main > section {
+    /* outline: 0.5em solid #f0f;
+    outline-offset: -0.5em; */
+
+    position: relative;
+
+    /* BUG: no flex in layout 2020 */
+    /* flex: 0 0 var(--width); */
+    display: inline-block;
+
+    /* BUG: no support for vertical-align (but the incorrect default
+        alignment happens to work in both layout 2013 and layout 2020) */
+    vertical-align: top;
+
+    width: var(--width);
+    height: var(--height);
+    padding: 1em;
+    transition-property: opacity;
+}
+main > section:not(.active) {
+    opacity: 0;
+}
+main > section * + * {
+    margin-top: 0.5em;
+}
+main > section li > ul,
+main > section li > ol {
+    margin-top: 0.5em;
+    margin-bottom: 0;
+}
+main > section * + strong,
+main > section * + a,
+main > section * + span {
+    /* BUG: margin pushes inlines down in layout 2020 */
+    margin-top: 0;
+}
+main > section h1,
+main > section h2,
+main > section h3,
+main > section h4,
+main > section h5,
+main > section h6,
+main > section p,
+main > section * + br {
+    margin: 0;
+}
+main > section ul ul,
+main > section ul ul * + li {
+    margin: 0 please ignore;
+}
+main > section h1 { font-size: 3em; text-align: center; }
+main > section h2 { font-size: 2em; text-align: center; }
+main > section h3 { font-size: 1.5em; }
+main > section h4 { font-size: 1em; }
+main > section h5 { font-size: 1em; }
+main > section h6 { font-size: 1em; }
+main > section :link,
+main > section :visited { color: inherit; }
+main > section > ul {
+    /* BUG: no support for outside in layout 2020 */
+    list-style-position: inside;
+    padding-inline-start: 0;
+}
+main > section li.cross {
+    /* BUG: no <string> in layout 2020 */
+    /* list-style-type: "âœ˜â€‚"; */
+    list-style-type: none;
+}
+main > section li.tick {
+    /* BUG: no <string> in layout 2020 */
+    /* list-style-type: "âœ”â€‚"; */
+    list-style-type: none;
+}
+main > section li.cross:before {
+    /* see BUG in originating element */
+    content: "âœ˜â€‚";
+
+    /* BUG: font fallback is broken in :before */
+    font-family: Symbola;
+}
+main > section li.tick:before {
+    /* see BUG in originating element */
+    content: "âœ”â€‚";
+
+    /* BUG: font fallback is broken in :after */
+    font-family: Symbola;
+}
+main > section code span {
+    /* BUG: margin pushes inlines down in layout 2020 */
+    margin-top: 0;
+}
+main > section code .comment {
+    color: white;
+}
+main > section code .decl {
+    color: #ffffa0;
+}
+main > section code .prop {
+    color: #a0d0ff;
+}
+main > section code .value {
+    color: #c0a060;
+}
+main > section code .imp {
+    color: #808080;
+}
+center {
+    /* BUG: missing presentational hints */
+    display: block;
+    text-align: center;
+}
+.bg, footer {
+    position: absolute;
+    z-index: -1;
+}
+.bg, footer {
+    background: no-repeat center center;
+
+    /* BUG: servo/servo#29705 */
+    transition-property: top, right, bottom, left;
+}
+.servo {
+    font-family: Fira Sans;
+    background: #121619;
+    color: white;
+}
+.servo .bg.a {
+    left: 0;
+    top: 0;
+    width: 1em;
+    height: 100%;
+    background-image: linear-gradient(180deg, #42be65 15%, #009d9a 25%, #009d9a 55%, #1192e8 65%);
+    transition-property: width;
+}
+.servo main > section {
+    padding-left: 2em;
+}
+.servo .bg.b {
+    bottom: 0.5em;
+    left: 1.5em;
+    width: calc(1em * 284 / 63);
+    height: 1em;
+    background-image: url(servo.png);
+    background-size: contain;
+    transition-property: left, width, height;
+}
+footer {
+    font-size: 0.375em;
+    bottom: calc(0.5em / 0.375);
+    right: calc(0.5em / 0.375);
+    text-align: right;
+    padding: 0.5em;
+    opacity: 1;
+    transition-property: opacity;
+}
+main.cover ~ .bg.logo {
+    opacity: 1;
+}
+.servo main.cover ~ .bg.a {
+    width: 2em;
+}
+.servo main.cover ~ .bg.b {
+    left: 2.5em;
+    width: calc(2em * 284 / 63);
+    height: 2em;
+}
+main.cover ~ footer {
+    opacity: 0;
+}
+@page {
+    size: 16cm 9cm;
+}
+@media print {
+    html {
+        overflow: auto;
+    }
+    body {
+        --width: 16cm;
+        --height: 9cm;
+    }
+    main {
+        position: static;
+    }
+    main > section {
+        display: block;
+    }
+    main > section:not(.active) {
+        opacity: initial;
+    }
+}
+
